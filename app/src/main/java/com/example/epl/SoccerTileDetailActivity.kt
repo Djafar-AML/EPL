@@ -1,9 +1,7 @@
 package com.example.epl
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.epl.databinding.ActivitySoccerTileDetailBinding
 import com.example.epl.utils.deserializeExtra
@@ -28,8 +26,22 @@ class SoccerTileDetailActivity : AppCompatActivity() {
 
     }
 
+    private fun enableBackButton() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     private fun changeActionBarTitle() {
         supportActionBar?.title = "Club Overview"
+    }
+
+    private fun deserializeSoccerTile(): SoccerTile {
+
+        val soccerTile = intent.deserializeExtra(soccerTileSerializableName, SoccerTile::class.java)
+        return soccerTile ?: SoccerTile(
+            title = "Whoops!",
+            description = "Something went wrong, please try again."
+        )
+
     }
 
     private fun initViews(soccerTile: SoccerTile) {
@@ -41,17 +53,6 @@ class SoccerTileDetailActivity : AppCompatActivity() {
             descriptionLongTextView.text = soccerTile.descriptionLong
         }
 
-    }
-
-    private fun deserializeSoccerTile(): SoccerTile {
-
-        val soccerTile = intent.deserializeExtra(soccerTileSerializableName, SoccerTile::class.java)
-        return soccerTile ?: SoccerTile(title = "Whoops!", description = "Something went wrong, please try again.")
-
-    }
-
-    private fun enableBackButton() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -70,4 +71,5 @@ class SoccerTileDetailActivity : AppCompatActivity() {
         }
 
     }
+
 }

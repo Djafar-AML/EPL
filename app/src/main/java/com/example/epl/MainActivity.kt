@@ -106,9 +106,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun soccerTileAdapterCallback(position: Int) {
-
-        val soccerTile = soccerTileList[position]
+    private fun soccerTileAdapterCallback(soccerTile: SoccerTile) {
 
         val intent = Intent(this, SoccerTileDetailActivity::class.java).apply {
             putExtra(soccerTileSerializableName, soccerTile)

@@ -9,7 +9,7 @@ import com.google.android.material.button.MaterialButton
 
 class SoccerTileAdapter(
     private val data: ArrayList<SoccerTile>,
-    private val moreButtonCallback:(position: Int) -> Unit
+    private val moreButtonCallback:(soccerTile: SoccerTile) -> Unit
 ) : RecyclerView.Adapter<SoccerTileAdapter.SoccerTileViewHolder>() {
 
     inner class SoccerTileViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -27,7 +27,7 @@ class SoccerTileAdapter(
             titleTextView.text = soccerTile.title
             descriptionTextView.text = soccerTile.description
             button.setOnClickListener {
-                moreButtonCallback(adapterPosition)
+                moreButtonCallback(soccerTile)
             }
 
         }
