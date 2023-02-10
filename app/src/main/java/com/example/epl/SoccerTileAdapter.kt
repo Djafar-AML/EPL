@@ -9,7 +9,7 @@ import com.google.android.material.button.MaterialButton
 
 class SoccerTileAdapter(
     private val data: ArrayList<SoccerTile>,
-    private val moreButtonCallback:(soccerTile: SoccerTile) -> Unit
+    private val moreButtonCallback: (soccerTile: SoccerTile) -> Unit
 ) : RecyclerView.Adapter<SoccerTileAdapter.SoccerTileViewHolder>() {
 
     inner class SoccerTileViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
