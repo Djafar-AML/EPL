@@ -26,7 +26,7 @@
                 android:id="@+id/teamHeaderImageView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/tottenham_header" />

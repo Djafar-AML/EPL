@@ -1,7 +1,8 @@
 package com.example.epl
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -9,13 +10,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val soccerTileList = soccerTileList()
+
+        val soccerTileAdapter = SoccerTileAdapter(soccerTileList)
+        val soccerTileRecyclerView = findViewById<RecyclerView>(R.id.mainRecyclerview).apply {
+            adapter = soccerTileAdapter
+        }
+
+        soccerTileAdapter.notifyDataSetChanged()
     }
 
-    private fun soccerTileList(): ArrayList<SocerTile> {
+    private fun soccerTileList(): ArrayList<SoccerTile> {
 
-        return ArrayList<SocerTile>().apply {
+        return ArrayList<SoccerTile>().apply {
             add(
-                SocerTile(
+                SoccerTile(
                     id = "manchester_united",
                     title = "Manchester United",
                     description = "Description of the club",
@@ -26,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             add(
-                SocerTile(
+                SoccerTile(
                     id = "manchester_city",
                     title = "Manchester City",
                     description = "Description of the club",
@@ -37,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             add(
-                SocerTile(
+                SoccerTile(
                     id = "tottenham",
                     title = "Tottenham",
                     description = "Description of the club",
@@ -48,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             add(
-                SocerTile(
+                SoccerTile(
                     id = "chelsea",
                     title = "Chelsea",
                     description = "Description of the club",
@@ -59,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             add(
-                SocerTile(
+                SoccerTile(
                     id = "leicester_city",
                     title = "Leicester City",
                     description = "Description of the club",
@@ -70,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             add(
-                SocerTile(
+                SoccerTile(
                     id = "liverpool",
                     title = "Liverpool",
                     description = "Description of the club",

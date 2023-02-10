@@ -1,6 +1,6 @@
 package com.example.epl
 
-data class SocerTile(
+data class SoccerTile(
     val id: String = "",
     val title: String = "",
     val description: String = "",
