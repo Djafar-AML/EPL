@@ -1,19 +1,25 @@
 package com.example.epl
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var soccerTileList: ArrayList<SoccerTile>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val soccerTileList = soccerTileList()
+        soccerTileList = soccerTileList()
 
-        val soccerTileAdapter = SoccerTileAdapter(soccerTileList)
+        val soccerTileAdapter = SoccerTileAdapter(soccerTileList, ::soccerTileAdapterCallback)
+
         val soccerTileRecyclerView = findViewById<RecyclerView>(R.id.mainRecyclerview).apply {
             adapter = soccerTileAdapter
+            setHasFixedSize(true)
         }
 
         soccerTileAdapter.notifyDataSetChanged()
@@ -89,6 +95,10 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+    }
+
+    private fun soccerTileAdapterCallback(position: Int) {
+        startActivity(Intent(this, SoccerTileDetailActivity::class.java))
     }
 
 }

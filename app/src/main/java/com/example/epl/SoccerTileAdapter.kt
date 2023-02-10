@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 
 class SoccerTileAdapter(
-    private val data: ArrayList<SoccerTile>
+    private val data: ArrayList<SoccerTile>,
+    private val moreButtonCallback:(position: Int) -> Unit
 ) : RecyclerView.Adapter<SoccerTileAdapter.SoccerTileViewHolder>() {
 
     inner class SoccerTileViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -27,7 +27,7 @@ class SoccerTileAdapter(
             titleTextView.text = soccerTile.title
             descriptionTextView.text = soccerTile.description
             button.setOnClickListener {
-                Toast.makeText(it.context, "$adapterPosition clicked!", Toast.LENGTH_SHORT).show()
+                moreButtonCallback(adapterPosition)
             }
 
         }
