@@ -2,27 +2,36 @@ package com.example.epl
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import com.example.epl.databinding.ActivityMainBinding
+import com.example.epl.utils.soccerTileSerializableName
 
 class MainActivity : AppCompatActivity() {
+
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     private lateinit var soccerTileList: ArrayList<SoccerTile>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
+        changeActionBarTitle()
 
         soccerTileList = soccerTileList()
 
         val soccerTileAdapter = SoccerTileAdapter(soccerTileList, ::soccerTileAdapterCallback)
 
-        val soccerTileRecyclerView = findViewById<RecyclerView>(R.id.mainRecyclerview).apply {
+        val soccerTileRecyclerView = binding.mainRecyclerview.apply {
             adapter = soccerTileAdapter
             setHasFixedSize(true)
         }
 
         soccerTileAdapter.notifyDataSetChanged()
+    }
+
+    private fun changeActionBarTitle() {
+        supportActionBar?.title = "EPL Home"
     }
 
     private fun soccerTileList(): ArrayList<SoccerTile> {
@@ -98,7 +107,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun soccerTileAdapterCallback(position: Int) {
-        startActivity(Intent(this, SoccerTileDetailActivity::class.java))
+
+        val soccerTile = soccerTileList[position]
+
+        val intent = Intent(this, SoccerTileDetailActivity::class.java).apply {
+            putExtra(soccerTileSerializableName, soccerTile)
+        }
+
+        startActivity(intent)
+
     }
 
 }
