@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         soccerTileAdapter.notifyDataSetChanged()
     }
 
