@@ -12,7 +12,9 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private lateinit var soccerTileList: ArrayList<SoccerTile>
+    companion object {
+        lateinit var soccerTileList: ArrayList<SoccerTile>
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)

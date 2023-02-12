@@ -43,8 +43,11 @@ class SoccerTileDetailActivity : AppCompatActivity() {
     private fun deserializeSoccerTile(): SoccerTile {
 
         val soccerTile = intent.deserializeExtra(soccerTileSerializableName, SoccerTile::class.java)
+        val st = MainActivity.soccerTileList.find {
+            it.id == soccerTile?.id
+        }
 
-        return soccerTile ?: SoccerTile(
+        return st ?: SoccerTile(
             title = "Whoops!",
             description = "Something went wrong, please try again.",
             headerImageResourceId = R.drawable.ic_broken_image_24
