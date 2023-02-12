@@ -8,13 +8,18 @@ import com.example.epl.utils.soccerTileSerializableName
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        lateinit var soccerTileList: ArrayList<SoccerTile>
+    }
+
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    companion object {
-        lateinit var soccerTileList: ArrayList<SoccerTile>
+    private val soccerTileAdapter by lazy {
+        SoccerTileAdapter(soccerTileList, ::soccerTileAdapterCallback, ::favoriteImageClickCallback)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -22,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
         soccerTileList = soccerTileList()
 
-        val soccerTileAdapter = SoccerTileAdapter(soccerTileList, ::soccerTileAdapterCallback)
 
         val soccerTileRecyclerView = binding.mainRecyclerview.apply {
             adapter = soccerTileAdapter
@@ -121,6 +125,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         startActivity(intent)
+
+    }
+
+    private fun favoriteImageClickCallback(itemPosition: Int, soccerTile: SoccerTile) {
+
+        val st = soccerTileList.find { it.id == soccerTile.id }
+        st?.let { st.isFavorite = !st.isFavorite }
+        soccerTileAdapter.notifyItemChanged(itemPosition)
 
     }
 

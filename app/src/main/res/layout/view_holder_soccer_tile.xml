@@ -56,6 +56,15 @@
                 app:layout_constraintTop_toBottomOf="@id/titleTextView"
                 tools:text="Description of the club" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/favoriteImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_favorite_border_24"
+                app:layout_constraintBottom_toBottomOf="@id/learnMoreButton"
+                app:layout_constraintStart_toStartOf="@id/descriptionTextView"
+                app:layout_constraintTop_toTopOf="@id/learnMoreButton" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/learnMoreButton"
                 android:layout_width="wrap_content"
