@@ -1,6 +1,9 @@
 package com.example.epl
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.epl.databinding.ActivitySoccerTileDetailBinding
@@ -15,13 +18,16 @@ class SoccerTileDetailActivity : AppCompatActivity() {
         )
     }
 
+    private val soccerTile by lazy {
+        deserializeSoccerTile()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         enableBackButton()
         changeActionBarTitle()
 
-        val soccerTile = deserializeSoccerTile()
         initViews(soccerTile)
 
     }
@@ -37,9 +43,11 @@ class SoccerTileDetailActivity : AppCompatActivity() {
     private fun deserializeSoccerTile(): SoccerTile {
 
         val soccerTile = intent.deserializeExtra(soccerTileSerializableName, SoccerTile::class.java)
+
         return soccerTile ?: SoccerTile(
             title = "Whoops!",
-            description = "Something went wrong, please try again."
+            description = "Something went wrong, please try again.",
+            headerImageResourceId = R.drawable.ic_broken_image_24
         )
 
     }
@@ -64,10 +72,53 @@ class SoccerTileDetailActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.menuItemLink -> {
+                navigateToTeamHomePage(soccerTile.teamUrl)
+                return true
+            }
+
+            R.id.menuItemFavorite -> {
+
+                flipIsFavorite()
+                val favoriteIcon = favoriteIconType(soccerTile.isFavorite)
+                item.setIcon(favoriteIcon)
+
+                return true
+            }
+
             else -> {
                 super.onOptionsItemSelected(item)
             }
 
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu_soccer_tile_detail, menu)
+
+        val favoriteIcon = favoriteIconType(soccerTile.isFavorite)
+        menu?.findItem(R.id.menuItemFavorite)?.setIcon(favoriteIcon)
+
+        return true
+    }
+
+    private fun navigateToTeamHomePage(teamUrl: String?) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(teamUrl))
+        startActivity(intent)
+    }
+
+    private fun flipIsFavorite() {
+        soccerTile.isFavorite = !soccerTile.isFavorite
+    }
+
+    private fun favoriteIconType(isFavorite: Boolean): Int {
+
+        return if (isFavorite) {
+            R.drawable.ic_favorite_24
+        } else {
+            R.drawable.ic_favorite_border_24
         }
 
     }
