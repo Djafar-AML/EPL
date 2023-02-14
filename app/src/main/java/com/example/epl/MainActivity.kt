@@ -1,47 +1,37 @@
 package com.example.epl
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.example.epl.databinding.ActivityMainBinding
+import com.example.epl.fragments.DetailFragment
+import com.example.epl.fragments.ListFragment
+import com.example.epl.utils.simpleName
 import com.example.epl.utils.soccerTileSerializableName
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        lateinit var soccerTileList: ArrayList<SoccerTile>
-    }
 
-    private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    private val soccerTileAdapter by lazy {
-        SoccerTileAdapter(soccerTileList, ::soccerTileAdapterCallback, ::favoriteImageClickCallback)
-    }
+    val soccerTileList by lazy { soccerTileList() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        changeActionBarTitle()
 
-        soccerTileList = soccerTileList()
+        addFragment(ListFragment())
+    }
 
+    private fun addFragment(fragment: Fragment) {
 
-        val soccerTileRecyclerView = binding.mainRecyclerview.apply {
-            adapter = soccerTileAdapter
-            setHasFixedSize(true)
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            addToBackStack(fragment.simpleName())
+            add(binding.fragmentContainerView.id, fragment)
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        soccerTileAdapter.notifyDataSetChanged()
-    }
-
-    private fun changeActionBarTitle() {
-        supportActionBar?.title = "EPL Home"
     }
 
     private fun soccerTileList(): ArrayList<SoccerTile> {
@@ -122,34 +112,51 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun soccerTileAdapterCallback(soccerTile: SoccerTile) {
+    fun soccerTileMoreButtonCallback(soccerTile: SoccerTile) {
 
-        val intent = Intent(this, SoccerTileDetailActivity::class.java).apply {
-            putExtra(soccerTileSerializableName, soccerTile)
-        }
+        val bundle = bundleSoccerTile(soccerTile)
 
-        startActivity(intent)
+        val detailFragment = detailFragmentWithArgs(bundle)
+
+        replaceFragment(detailFragment)
 
     }
 
-    private fun favoriteImageClickCallback(itemPosition: Int, soccerTile: SoccerTile) {
+    fun favoriteImageClickCallback(itemPosition: Int, soccerTile: SoccerTile) {
 
-        val st = soccerTileList.find { it.id == soccerTile.id }
-        st?.let { st.isFavorite = !st.isFavorite }
-        soccerTileAdapter.notifyItemChanged(itemPosition)
+        val st = findSoccerTile(soccerTile)
+        st?.let { flipIsFavorite(st) }
 
+        updateListFragmentAdapter(itemPosition)
+
+    }
+
+    private fun bundleSoccerTile(soccerTile: SoccerTile) =
+        Bundle().apply { putSerializable(soccerTileSerializableName, soccerTile) }
+
+    private fun detailFragmentWithArgs(bundle: Bundle) =
+        DetailFragment().apply { arguments = bundle }
+
+    private fun replaceFragment(fragment: Fragment) {
+
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            addToBackStack(fragment.simpleName())
+            replace(binding.fragmentContainerView.id, fragment)
+        }
+
+    }
+
+    private fun findSoccerTile(soccerTile: SoccerTile) =
+        soccerTileList.find { it.id == soccerTile.id }
+
+    private fun flipIsFavorite(soccerTile: SoccerTile) {
+        soccerTile.isFavorite = !soccerTile.isFavorite
+    }
+
+    private fun updateListFragmentAdapter(itemPosition: Int) {
+        val lf = supportFragmentManager.fragments[0] as? ListFragment
+        lf?.onFavoriteClicked(itemPosition)
     }
 
 }
-
-//manU- https://i.pinimg.com/originals/8f/85/15/8f85159ed8306846b050386384893c1e.jpg
-
-//manC- http://www.officialyayatoure.com/wp-content/uploads/2016/08/yaya-city-header.jpg
-
-//tot- https://i.imgur.com/ajmkb.jpg
-
-//chelsea- https://wallpaperstock.net/chelsea-logo%2c-high-wallpapers_55758_1680x1050.jpg
-
-//leicester- https://64.media.tumblr.com/87c9b804ffe8f4a0212be18368daf886/tumblr_od5g0cpoiE1ude0uno1_1280.jpg
-
-//liver- https://theulsterfry.com/wp-content/uploads/2019/05/videoblocks-liverpool-fc-flag-waving-slow-motion-3d-rendering-blue-sky-background-editorial-animation-seamless-loop-4k_rjjucvdk_thumbnail-full01-1024x576.png
