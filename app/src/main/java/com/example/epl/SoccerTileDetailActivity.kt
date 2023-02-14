@@ -76,7 +76,7 @@ class SoccerTileDetailActivity : AppCompatActivity() {
             }
 
             R.id.menuItemLink -> {
-                navigateToTeamHomePage(soccerTile.teamUrl)
+                browseTheTeamHomePage(soccerTile.teamUrl)
                 return true
             }
 
@@ -107,7 +107,7 @@ class SoccerTileDetailActivity : AppCompatActivity() {
         return true
     }
 
-    private fun navigateToTeamHomePage(teamUrl: String?) {
+    private fun browseTheTeamHomePage(teamUrl: String?) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(teamUrl))
         startActivity(intent)
     }

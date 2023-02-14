@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var soccerTileList: ArrayList<SoccerTile>
     }
 
-    private val binding: ActivityMainBinding by lazy {
+    private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
