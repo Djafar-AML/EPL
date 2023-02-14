@@ -12,7 +12,7 @@ import com.example.epl.utils.soccerTileSerializableName
 
 class SoccerTileDetailActivity : AppCompatActivity() {
 
-    private val binding: ActivitySoccerTileDetailBinding by lazy {
+    private val binding by lazy {
         ActivitySoccerTileDetailBinding.inflate(
             layoutInflater
         )
