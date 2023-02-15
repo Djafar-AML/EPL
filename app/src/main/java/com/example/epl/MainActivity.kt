@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateListFragmentAdapter(itemPosition: Int) {
         val lf = supportFragmentManager.fragments[0] as? ListFragment
-        lf?.onFavoriteClicked(itemPosition)
+        lf?.onFavoriteClick(itemPosition)
     }
 
 }

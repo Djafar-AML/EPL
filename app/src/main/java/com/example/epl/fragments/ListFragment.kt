@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.example.epl.MainActivity
 import com.example.epl.SoccerTile
 import com.example.epl.SoccerTileAdapter
 import com.example.epl.base.BaseFragment
@@ -64,7 +62,7 @@ class ListFragment : BaseFragment() {
         activityHandler.supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    fun onFavoriteClicked(itemPosition: Int) {
+    fun onFavoriteClick(itemPosition: Int) {
         soccerTileAdapter.notifyItemChanged(itemPosition)
     }
 
