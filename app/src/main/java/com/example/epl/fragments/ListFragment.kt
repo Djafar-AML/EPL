@@ -8,14 +8,13 @@ import androidx.fragment.app.Fragment
 import com.example.epl.MainActivity
 import com.example.epl.SoccerTile
 import com.example.epl.SoccerTileAdapter
+import com.example.epl.base.BaseFragment
 import com.example.epl.databinding.FragmentListBinding
 
-class ListFragment : Fragment() {
+class ListFragment : BaseFragment() {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
-
-    private val activityHandler by lazy { activity as MainActivity }
 
     private val soccerTileList: ArrayList<SoccerTile>
         get() = activityHandler.soccerTileList
@@ -40,14 +39,11 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        changeActionBarTitle()
+        setActionbarTitle("EPL Home")
         initMainRecyclerview()
 
     }
 
-    private fun changeActionBarTitle() {
-        activityHandler.supportActionBar?.title = "EPL Home"
-    }
 
     private fun initMainRecyclerview() {
         binding.mainRecyclerview.apply {

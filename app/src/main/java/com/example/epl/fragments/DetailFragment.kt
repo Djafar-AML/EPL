@@ -5,30 +5,24 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import com.example.epl.MainActivity
 import com.example.epl.R
 import com.example.epl.SoccerTile
+import com.example.epl.base.BaseFragment
 import com.example.epl.databinding.FragmentDetailBinding
 import com.example.epl.utils.deserialize
 import com.example.epl.utils.soccerTileSerializableName
 
-class DetailFragment : Fragment() {
+class DetailFragment : BaseFragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-
-    private val activityHandler by lazy {
-        activity as MainActivity
-    }
 
     private val argSoccerTile by lazy {
         arguments?.deserialize(soccerTileSerializableName, SoccerTile::class.java)
     }
 
     private val soccerTile by lazy { soccerTile() }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,14 +36,10 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        changeActionBarTitle()
+        setActionbarTitle("Club Overview")
         enableBackButton()
         initMenuOptions()
         initViews(soccerTile)
-    }
-
-    private fun changeActionBarTitle() {
-        activityHandler.supportActionBar?.title = "Club Overview"
     }
 
     private fun enableBackButton() {

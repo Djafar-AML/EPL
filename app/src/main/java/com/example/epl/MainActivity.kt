@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack(fragment.simpleName())
             add(binding.fragmentContainerView.id, fragment)
         }
 
