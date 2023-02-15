@@ -29,7 +29,6 @@ class SoccerTileAdapter(
 
         fun onBind(soccerTile: SoccerTile) {
 
-//            headerImageView.setImageResource(soccerTile.headerImageResourceId)
             headerImageView.loadImageByPicasso(
                 soccerTile.headerImageResourceUrl,
                 soccerTile.headerImageResourceId
