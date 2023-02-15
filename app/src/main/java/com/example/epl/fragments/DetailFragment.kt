@@ -11,6 +11,7 @@ import com.example.epl.SoccerTile
 import com.example.epl.base.BaseFragment
 import com.example.epl.databinding.FragmentDetailBinding
 import com.example.epl.utils.deserialize
+import com.example.epl.utils.loadImageByPicasso
 import com.example.epl.utils.soccerTileSerializableName
 
 class DetailFragment : BaseFragment() {
@@ -117,7 +118,10 @@ class DetailFragment : BaseFragment() {
     private fun initViews(soccerTile: SoccerTile) {
 
         binding.apply {
-            teamHeaderImageView.setImageResource(soccerTile.headerImageResourceId)
+            teamHeaderImageView.loadImageByPicasso(
+                soccerTile.headerImageResourceUrl,
+                soccerTile.headerImageResourceId
+            )
             titleTextView.text = soccerTile.title
             descriptionTextView.text = soccerTile.description
             descriptionLongTextView.text = soccerTile.descriptionLong

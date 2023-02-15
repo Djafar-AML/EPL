@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.epl.utils.loadImageByPicasso
 import com.google.android.material.button.MaterialButton
 
 class SoccerTileAdapter(
@@ -28,7 +29,11 @@ class SoccerTileAdapter(
 
         fun onBind(soccerTile: SoccerTile) {
 
-            headerImageView.setImageResource(soccerTile.headerImageResourceId)
+//            headerImageView.setImageResource(soccerTile.headerImageResourceId)
+            headerImageView.loadImageByPicasso(
+                soccerTile.headerImageResourceUrl,
+                soccerTile.headerImageResourceId
+            )
             titleTextView.text = soccerTile.title
             descriptionTextView.text = soccerTile.description
 
