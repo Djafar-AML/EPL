@@ -150,6 +150,12 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             addToBackStack(fragment.simpleName())
+            setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out,
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+            )
             replace(binding.fragmentContainerView.id, fragment)
         }
 
