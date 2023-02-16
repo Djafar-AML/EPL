@@ -8,6 +8,7 @@ import com.example.epl.SoccerTile
 import com.example.epl.SoccerTileAdapter
 import com.example.epl.base.BaseFragment
 import com.example.epl.databinding.FragmentListBinding
+import com.example.epl.prefs.Prefs
 
 class ListFragment : BaseFragment() {
 
@@ -21,7 +22,7 @@ class ListFragment : BaseFragment() {
         SoccerTileAdapter(
             soccerTileList,
             activityHandler::soccerTileMoreButtonCallback,
-            activityHandler::favoriteIconClickCallback
+            ::favoriteIconClickCallback
         )
     }
 
@@ -62,8 +63,30 @@ class ListFragment : BaseFragment() {
         activityHandler.supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    fun onFavoriteClick(itemPosition: Int) {
+    private fun favoriteIconClickCallback(itemPosition: Int, soccerTile: SoccerTile) {
+
+        val st = findSoccerTile(soccerTile)
+        st?.let { flipIsFavorite(st) }
+
+        updateListFragmentAdapter(itemPosition)
+
+        st?.let { saveFavoriteStatusToPrefs(st.id, st.isFavorite) }
+
+    }
+
+    private fun findSoccerTile(soccerTile: SoccerTile) =
+        soccerTileList.find { it.id == soccerTile.id }
+
+    private fun flipIsFavorite(soccerTile: SoccerTile) {
+        soccerTile.isFavorite = !soccerTile.isFavorite
+    }
+
+    private fun updateListFragmentAdapter(itemPosition: Int) {
         soccerTileAdapter.notifyItemChanged(itemPosition)
+    }
+
+    private fun saveFavoriteStatusToPrefs(id: String, isFavorite: Boolean) {
+        Prefs.setSoccerTileIsFavorite(id, isFavorite)
     }
 
     override fun onDestroyView() {

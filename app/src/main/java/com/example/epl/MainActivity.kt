@@ -128,16 +128,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun favoriteIconClickCallback(itemPosition: Int, soccerTile: SoccerTile) {
-
-        val st = findSoccerTile(soccerTile)
-        st?.let { flipIsFavorite(st) }
-
-        updateListFragmentAdapter(itemPosition)
-
-        st?.let { saveFavoriteStatusToPrefs(st.id, st.isFavorite) }
-
-    }
 
     private fun bundleSoccerTile(soccerTile: SoccerTile) =
         Bundle().apply { putSerializable(soccerTileSerializableName, soccerTile) }
@@ -159,22 +149,6 @@ class MainActivity : AppCompatActivity() {
             replace(binding.fragmentContainerView.id, fragment)
         }
 
-    }
-
-    private fun findSoccerTile(soccerTile: SoccerTile) =
-        soccerTileList.find { it.id == soccerTile.id }
-
-    private fun flipIsFavorite(soccerTile: SoccerTile) {
-        soccerTile.isFavorite = !soccerTile.isFavorite
-    }
-
-    private fun updateListFragmentAdapter(itemPosition: Int) {
-        val lf = supportFragmentManager.fragments[0] as? ListFragment
-        lf?.onFavoriteClick(itemPosition)
-    }
-
-    private fun saveFavoriteStatusToPrefs(id: String, isFavorite: Boolean) {
-        Prefs.setSoccerTileIsFavorite(id, isFavorite)
     }
 
 }
