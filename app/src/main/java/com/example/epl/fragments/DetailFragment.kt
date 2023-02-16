@@ -10,6 +10,7 @@ import com.example.epl.R
 import com.example.epl.SoccerTile
 import com.example.epl.base.BaseFragment
 import com.example.epl.databinding.FragmentDetailBinding
+import com.example.epl.prefs.Prefs
 import com.example.epl.utils.deserialize
 import com.example.epl.utils.loadImageByPicasso
 import com.example.epl.utils.soccerTileSerializableName
@@ -90,6 +91,8 @@ class DetailFragment : BaseFragment() {
                     val favoriteIcon = favoriteIconType(soccerTile.isFavorite)
                     menuItem.setIcon(favoriteIcon)
 
+                    saveFavoriteStatusToPrefs(soccerTile.id, soccerTile.isFavorite)
+
                     true
                 }
 
@@ -149,6 +152,10 @@ class DetailFragment : BaseFragment() {
             R.drawable.ic_favorite_border_24
         }
 
+    }
+
+    private fun saveFavoriteStatusToPrefs(id: String, isFavorite: Boolean) {
+        Prefs.setSoccerTileIsFavorite(id, isFavorite)
     }
 
     override fun onDestroyView() {

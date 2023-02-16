@@ -7,6 +7,7 @@ import androidx.fragment.app.commit
 import com.example.epl.databinding.ActivityMainBinding
 import com.example.epl.fragments.DetailFragment
 import com.example.epl.fragments.ListFragment
+import com.example.epl.prefs.Prefs
 import com.example.epl.utils.simpleName
 import com.example.epl.utils.soccerTileSerializableName
 
@@ -45,7 +46,8 @@ class MainActivity : AppCompatActivity() {
                     buttonText = "Learn more",
                     headerImageResourceId = R.drawable.manu_header,
                     headerImageResourceUrl = "https://i.pinimg.com/originals/8f/85/15/8f85159ed8306846b050386384893c1e.jpg",
-                    teamUrl = "https://www.manutd.com/"
+                    teamUrl = "https://www.manutd.com/",
+                    isFavorite = Prefs.getSoccerTileIsFavorite("manchester_united")
                 )
             )
             add(
@@ -57,7 +59,8 @@ class MainActivity : AppCompatActivity() {
                     buttonText = "Learn more",
                     headerImageResourceId = R.drawable.mancity_header,
                     headerImageResourceUrl = "http://www.officialyayatoure.com/wp-content/uploads/2016/08/yaya-city-header.jpg",
-                    teamUrl = "https://www.mancity.com/"
+                    teamUrl = "https://www.mancity.com/",
+                    isFavorite = Prefs.getSoccerTileIsFavorite("manchester_city")
                 )
             )
             add(
@@ -69,7 +72,8 @@ class MainActivity : AppCompatActivity() {
                     buttonText = "Learn more",
                     headerImageResourceId = R.drawable.tottenham_header,
                     headerImageResourceUrl = "https://i.imgur.com/ajmkb.jpg",
-                    teamUrl = "https://www.tottenhamhotspur.com/"
+                    teamUrl = "https://www.tottenhamhotspur.com/",
+                    isFavorite = Prefs.getSoccerTileIsFavorite("tottenham")
                 )
             )
             add(
@@ -81,7 +85,8 @@ class MainActivity : AppCompatActivity() {
                     buttonText = "Learn more",
                     headerImageResourceId = R.drawable.chelsea_header,
                     headerImageResourceUrl = "https://wallpaperstock.net/chelsea-logo%2c-high-wallpapers_55758_1680x1050.jpg",
-                    teamUrl = "https://www.chelseafc.com/en"
+                    teamUrl = "https://www.chelseafc.com/en",
+                    isFavorite = Prefs.getSoccerTileIsFavorite("chelsea")
                 )
             )
             add(
@@ -93,7 +98,8 @@ class MainActivity : AppCompatActivity() {
                     buttonText = "Learn more",
                     headerImageResourceId = R.drawable.leicester_header,
                     headerImageResourceUrl = "https://64.media.tumblr.com/87c9b804ffe8f4a0212be18368daf886/tumblr_od5g0cpoiE1ude0uno1_1280.jpg",
-                    teamUrl = "https://www.lcfc.com/"
+                    teamUrl = "https://www.lcfc.com/",
+                    isFavorite = Prefs.getSoccerTileIsFavorite("leicester_city")
                 )
             )
             add(
@@ -105,7 +111,8 @@ class MainActivity : AppCompatActivity() {
                     buttonText = "Learn more",
                     headerImageResourceId = R.drawable.liverpool_header,
                     headerImageResourceUrl = "https://theulsterfry.com/wp-content/uploads/2019/05/videoblocks-liverpool-fc-flag-waving-slow-motion-3d-rendering-blue-sky-background-editorial-animation-seamless-loop-4k_rjjucvdk_thumbnail-full01-1024x576.png",
-                    teamUrl = "https://www.liverpoolfc.com/"
+                    teamUrl = "https://www.liverpoolfc.com/",
+                    isFavorite = Prefs.getSoccerTileIsFavorite("liverpool")
                 )
             )
         }
@@ -121,12 +128,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun favoriteImageClickCallback(itemPosition: Int, soccerTile: SoccerTile) {
+    fun favoriteIconClickCallback(itemPosition: Int, soccerTile: SoccerTile) {
 
         val st = findSoccerTile(soccerTile)
         st?.let { flipIsFavorite(st) }
 
         updateListFragmentAdapter(itemPosition)
+
+        st?.let { saveFavoriteStatusToPrefs(st.id, st.isFavorite) }
 
     }
 
@@ -156,6 +165,10 @@ class MainActivity : AppCompatActivity() {
     private fun updateListFragmentAdapter(itemPosition: Int) {
         val lf = supportFragmentManager.fragments[0] as? ListFragment
         lf?.onFavoriteClick(itemPosition)
+    }
+
+    private fun saveFavoriteStatusToPrefs(id: String, isFavorite: Boolean) {
+        Prefs.setSoccerTileIsFavorite(id, isFavorite)
     }
 
 }

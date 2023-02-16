@@ -21,7 +21,7 @@ class ListFragment : BaseFragment() {
         SoccerTileAdapter(
             soccerTileList,
             activityHandler::soccerTileMoreButtonCallback,
-            activityHandler::favoriteImageClickCallback
+            activityHandler::favoriteIconClickCallback
         )
     }
 

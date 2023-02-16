@@ -1,16 +1,28 @@
 package com.example.epl
 
 import android.app.Application
+import com.example.epl.prefs.Prefs
 
-class EplApplication: Application() {
+lateinit var application: EplApplication
+    private set
 
-    companion object {
-        lateinit var application: Application
-    }
+
+class EplApplication : Application() {
+
 
     override fun onCreate() {
         super.onCreate()
-        application = this
+        initApplication()
+        initPrefs()
 
     }
+
+    private fun initApplication() {
+        application = this
+    }
+
+    private fun initPrefs() {
+        Prefs.init(application)
+    }
+
 }
