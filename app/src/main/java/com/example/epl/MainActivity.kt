@@ -128,7 +128,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private fun bundleSoccerTile(soccerTile: SoccerTile) =
         Bundle().apply { putSerializable(soccerTileSerializableName, soccerTile) }
 
