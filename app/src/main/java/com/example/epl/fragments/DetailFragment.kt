@@ -18,7 +18,7 @@ import com.example.epl.utils.soccerTileSerializableName
 class DetailFragment : BaseFragment() {
 
     private var _binding: FragmentDetailBinding? = null
-    private val binding get() = _binding!!
+    private val binding by lazy { _binding!! }
 
     private val argSoccerTile by lazy {
         arguments?.deserialize(soccerTileSerializableName, SoccerTile::class.java)
@@ -134,9 +134,9 @@ class DetailFragment : BaseFragment() {
 
     private fun soccerTile(): SoccerTile {
 
-        val _soccerTile = activityHandler.soccerTileList.find { it.id == argSoccerTile?.id }
+        val st = activityHandler.soccerTileList.find { it.id == argSoccerTile?.id }
 
-        return _soccerTile ?: SoccerTile(
+        return st ?: SoccerTile(
             title = "Whoops!",
             description = "Something went wrong, please try again.",
             headerImageResourceId = R.drawable.ic_broken_image_24
